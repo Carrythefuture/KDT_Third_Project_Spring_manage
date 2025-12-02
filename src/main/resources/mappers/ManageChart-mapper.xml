@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="ManageChart">
+
+    <!--<insert id="insertModel" parameterType="com.tnt.project.dto.ModelDTO">
+        
+    </insert>-->
+
+   
+    <select id="getAgeData" resultType="map">
+        WITH AGE_GROUP AS (
+		  SELECT '10' LABEL FROM DUAL UNION ALL
+		  SELECT '20' FROM DUAL UNION ALL
+		  SELECT '30' FROM DUAL UNION ALL
+		  SELECT '40' FROM DUAL UNION ALL
+		  SELECT '50' FROM DUAL
+		)
+		SELECT
+		  G.LABEL,
+		  NVL(COUNT(M.BIRTH), 0) AS CNT
+		FROM AGE_GROUP G
+		LEFT JOIN MEMBER M
+		  ON (
+		    CASE
+		      WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, M.BIRTH) / 12) BETWEEN 0 AND 19 THEN '10'
+		      WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, M.BIRTH) / 12) BETWEEN 20 AND 29 THEN '20'
+		      WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, M.BIRTH) / 12) BETWEEN 30 AND 39 THEN '30'
+		      WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, M.BIRTH) / 12) BETWEEN 40 AND 49 THEN '40'
+		      ELSE '50'
+		    END = G.LABEL
+		  )
+		GROUP BY G.LABEL
+		ORDER BY G.LABEL;
+    </select>
+	
+	<select id="getAgeData" resultType="map">
+        WITH AGE_GROUP AS (
+		  SELECT '10' LABEL FROM DUAL UNION ALL
+		  SELECT '20' FROM DUAL UNION ALL
+		  SELECT '30' FROM DUAL UNION ALL
+		  SELECT '40' FROM DUAL UNION ALL
+		  SELECT '50' FROM DUAL
+		)
+		SELECT
+		  G.LABEL,
+		  NVL(COUNT(M.BIRTH), 0) AS CNT
+		FROM AGE_GROUP G
+		LEFT JOIN MEMBER M
+		  ON (
+		    CASE
+		      WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, M.BIRTH) / 12) BETWEEN 0 AND 19 THEN '10'
+		      WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, M.BIRTH) / 12) BETWEEN 20 AND 29 THEN '20'
+		      WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, M.BIRTH) / 12) BETWEEN 30 AND 39 THEN '30'
+		      WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, M.BIRTH) / 12) BETWEEN 40 AND 49 THEN '40'
+		      ELSE '50'
+		    END = G.LABEL
+		  )
+		GROUP BY G.LABEL
+		ORDER BY G.LABEL;
+    </select>
+    
+</mapper>
