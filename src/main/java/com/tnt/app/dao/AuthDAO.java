@@ -14,7 +14,8 @@ public class AuthDAO {
 
 	public AdminDTO findByUserId(String id) {
 		
-		return mybatis.selectOne("Member.findByUserId", id);
+		return null;
+		//return mybatis.selectOne("Member.findByUserId", id);
 	}
 
 }

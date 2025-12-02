@@ -20,30 +20,31 @@ public class AuthService {
    
         // 1) userId로 DTO 가져오기
     	AdminDTO Admin = AuthDAO.findByUserId(id);
-      
-        if (Admin == null) {
-            throw new RuntimeException("아이디가 존재하지 않습니다.");
-        }
-
-        // 2) 입력 PW SHA-512 해싱
-        String encPw = Encrypt.encrypt(rawPw);
-        System.out.println(Admin.getPassword());
-
-        System.out.println(encPw);
-        // 3) 비밀번호 비교
-        if (!encPw.equals(Admin.getPassword())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
-        }
-
-        // 4) 권한 생성
-        List<String> roles = new ArrayList<>();
-
-        if ("admin".equals(Admin.getId())) {
-            roles.add("ADMIN");
-        } else {
-            roles.add("MEMBER");
-        }
-
-        return roles;
+    	return null;
+    	
+//        if (Admin == null) {
+//            throw new RuntimeException("아이디가 존재하지 않습니다.");
+//        }
+//
+//        // 2) 입력 PW SHA-512 해싱
+//        String encPw = Encrypt.encrypt(rawPw);
+//        System.out.println(Admin.getPassword());
+//
+//        System.out.println(encPw);
+//        // 3) 비밀번호 비교
+//        if (!encPw.equals(Admin.getPassword())) {
+//            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+//        }
+//
+//        // 4) 권한 생성
+//        List<String> roles = new ArrayList<>();
+//
+//        if ("admin".equals(Admin.getId())) {
+//            roles.add("ADMIN");
+//        } else {
+//            roles.add("MEMBER");
+//        }
+//
+//        return roles;
     }
 }

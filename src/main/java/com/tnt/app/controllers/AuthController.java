@@ -37,12 +37,10 @@ public class AuthController {
 			List<String> roles = authService.login(id, pw);
 			// JWT 생성
 			String token = jwt.createToken(id, roles);
-
+			
+			System.out.println(token);
 			return ResponseEntity.ok(Map.of(
-				"token", token,
-				"id", id,
-				"roles", String.join(",", roles)
-				
+				"token", token
 			));
 		
 		} catch (Exception e) {
@@ -54,7 +52,7 @@ public class AuthController {
 		}
 	}
 	
-	@GetMapping("/auth/verify")
+	@GetMapping("/verify")
 	public ResponseEntity<?> verify(HttpServletRequest request) {
 	    return ResponseEntity.ok().build();
 	}
