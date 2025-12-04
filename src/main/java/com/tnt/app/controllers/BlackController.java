@@ -43,8 +43,8 @@ public class BlackController {
 	
 	@PostMapping("/cancel")
 	public ResponseEntity<Void> blackCancelMember(@RequestBody Map<String, String> body, Authentication authentication) {
-		String admin_id = authentication.getName();
-		
+		//String admin_id = authentication.getName();
+		System.out.println("여기까지온다.");
 		String id = body.get("id");
 		
 		blackService.blackCancelMember(id);

@@ -24,22 +24,23 @@ public class JwtFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtUtil jwt;
 
-
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		String header = request.getHeader("Authorization");
 		if(header ==null || !header.startsWith("Bearer")) {
 			filterChain.doFilter(request, response);
 			return;
 		}
-
+		
 		String token = header.substring(7); //Bearer 토큰뭐시기 여서 7글자 떼어냄.
 		//validateToken에서 예외를 반환해서 try catch로 묶음
 		System.out.println("토크은:"+token);
 		try {
 			if(jwt.validateToken(token)) { //토큰이 유효한 경우
+				System.out.println("토크은2:"+token);
 				String id = jwt.getIdFromToken(token);
 //				List<String> roles = jwt.getRolesFromToken(token); 
 				
@@ -57,8 +58,10 @@ public class JwtFilter extends OncePerRequestFilter {
 		}
 		catch(Exception e) {
 			System.out.println("filter 에러");
+			System.out.println("토크은:4"+token);
 			SecurityContextHolder.clearContext(); //저장된 컨텍스트 홀더를 clear 시킴
 		}
+		System.out.println("토크은3:"+token);
 		filterChain.doFilter(request, response);
 	}
 }
