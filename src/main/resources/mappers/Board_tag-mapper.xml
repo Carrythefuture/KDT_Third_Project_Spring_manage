@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="BoardTag">
+
+
+
+<select id="getSeq" resultType="int">
+		SELECT board_tag_seq.NEXTVAL FROM dual
+</select>
+	
+<select id="findByBoardId" resultType="com.tnt.app.dto.BoardTagDTO">
+		SELECT 
+			seq,
+			board_id,
+			tag
+		FROM board_tag
+		WHERE board_id = #{boardId}
+</select>	
+
+</mapper>
