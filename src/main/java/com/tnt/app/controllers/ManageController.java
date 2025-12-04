@@ -24,4 +24,5 @@ public class ManageController {
 
 		return ResponseEntity.ok(map);
 	}
+	
 }

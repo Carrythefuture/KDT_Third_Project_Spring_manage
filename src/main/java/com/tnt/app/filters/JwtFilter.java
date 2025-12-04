@@ -37,15 +37,16 @@ public class JwtFilter extends OncePerRequestFilter {
 
 		String token = header.substring(7); //Bearer 토큰뭐시기 여서 7글자 떼어냄.
 		//validateToken에서 예외를 반환해서 try catch로 묶음
+		System.out.println("토크은:"+token);
 		try {
 			if(jwt.validateToken(token)) { //토큰이 유효한 경우
 				String id = jwt.getIdFromToken(token);
-				List<String> roles = jwt.getRolesFromToken(token);
+//				List<String> roles = jwt.getRolesFromToken(token); 
 				
 				List<SimpleGrantedAuthority> auths = new ArrayList<>(); // 권한 목록 저장용 리스트
-				for(String role : roles) {
-					auths.add(new SimpleGrantedAuthority("ROLE_"+role));	//스프링 싴큐리티가 요구하는 Prefix 와 데이터 타입.
-				}
+//				for(String role : roles) { //null인데 for문 돌리려해서 에러뜸
+//					auths.add(new SimpleGrantedAuthority("ROLE_"+role));	//스프링 싴큐리티가 요구하는 Prefix 와 데이터 타입.
+//				}
 
 				UsernamePasswordAuthenticationToken authentication = 
 						new UsernamePasswordAuthenticationToken(id,null,auths); //id, pw, 권한 목록
@@ -55,6 +56,7 @@ public class JwtFilter extends OncePerRequestFilter {
 			}
 		}
 		catch(Exception e) {
+			System.out.println("filter 에러");
 			SecurityContextHolder.clearContext(); //저장된 컨텍스트 홀더를 clear 시킴
 		}
 		filterChain.doFilter(request, response);

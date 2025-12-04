@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="Black">
+
+    <select id="getBlackData" resultType="com.tnt.app.dto.BlackDTO">
+        SELECT
+		    b.ID,
+		    m.NICKNAME,
+		    m.NAME,
+		    b.REASON,
+		    b.admin_id,
+		    TO_Char(b.CREATED_AT, 'YYYY/MM/DD HH24:MI:SS') as created_at   
+		FROM BLACK b
+		JOIN MEMBER m
+		ON b.ID = m.ID
+    </select>
+	
+	<insert id="blackMember" parameterType="map">
+        insert into black values(#{id},#{reason},#{admin_id},sysdate)
+    </insert>
+    
+    <update id="updateMemberBlack">
+    	update member set black='true' where id = #{id}
+    </update>
+    
+    <update id="updateMemberBlackCancel">
+    	update member set black='false' where id = #{id}
+    </update>
+    
+    <delete id="deleteBlack" parameterType="String">
+    	delete from black where id = #{id}
+    </delete>
+</mapper>
