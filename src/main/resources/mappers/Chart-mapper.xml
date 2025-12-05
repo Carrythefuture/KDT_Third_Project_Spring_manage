@@ -30,19 +30,27 @@
 		ORDER BY G.LABEL
     </select>
 	
-	<insert id="blackMember" parameterType="map">
-        insert into black values(#{id},#{reason},#{admin_id},sysdate)
-    </insert>
-    
-    <update id="updateMemberBlack">
-    	update member set black='true' where id = #{id}
-    </update>
-    
-    <update id="updateMemberBlackCancel">
-    	update member set black='false' where id = #{id}
-    </update>
-    
-    <delete id="deleteBlack" parameterType="String">
-    	delete from black where id = #{id}
-    </delete>
+	<select id="getGenderData" resultType="map">
+		select nvl(gender,'none') as GENDER, count(*) as cnt from member group by gender order by gender
+	</select>
+	
+	<select id="getBodyData" resultType="map">
+		WITH type_group AS (
+		    SELECT 'hourglass' AS LABEL FROM DUAL UNION ALL	
+		    SELECT 'triangle' FROM DUAL UNION ALL
+		    SELECT 'inverted_triangle' FROM DUAL UNION ALL
+		    SELECT 'rectangle' FROM DUAL UNION ALL
+		    SELECT 'apple' FROM DUAL UNION ALL
+		    SELECT 'none' FROM DUAL
+		)
+		SELECT
+		    G.LABEL,
+		    NVL(COUNT(M.ID), 0) AS CNT
+		FROM type_group G
+		LEFT JOIN MEMBER M
+		    ON NVL(M.BODY_SHAPE, 'none') = G.LABEL
+		GROUP BY G.LABEL
+		ORDER BY G.LABEL
+	</select>
+
 </mapper>
